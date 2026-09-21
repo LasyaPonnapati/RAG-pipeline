@@ -102,7 +102,7 @@ def main():
             continue
 
         standalone_query = reformulate_query(query, chat_history)
-        print(f"Standalone query: {standalone_query}")
+        print(f"Reformulated question: {standalone_query}")
         relevant_docs = retrieve(db, standalone_query)
         answer = generate_answer(standalone_query, relevant_docs)
         chat_history.append({"role": "user", "content": query})
