@@ -1,6 +1,9 @@
+import base64
 import json
 import os
 from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 
 from openai import OpenAI
 from unstructured.chunking.title import chunk_by_title
@@ -68,31 +71,90 @@ def get_content_data(chunk: CompositeElement):
 
     return content_data
 
-def create_ai_summary_for_chunk(text: str, tables: list, images: list):
-    """Create an AI summary for a chunk."""
-    SUMMARY_SYSTEM_PROMPT = (
-        "You write a standalone summary of one document chunk for search and retrieval. "
-        "The summary is stored on its own, so a reader who never sees the source must "
-        "still understand it. Do not say \"this chunk\", \"the table above\", or \"the figure\".\n"
-        "Cover:\n"
-        "- The topic and the claim the passage makes, in the source's own terms\n"
-        "- Facts worth retrieving: names, numbers, units, equations, and comparisons\n"
-        "- Each table as sentences: column meaning, row relationships, and notable values. Do not copy raw HTML\n"
-        "- Each image as a description: what it shows, labels or axes, and the point it supports\n"
-        "Use only the text, tables, and images provided. Do not add outside knowledge. "
-        "Write dense prose. Return only the summary."
+GROQ_TEXT_MODEL = "openai/gpt-oss-20b"
+GEMINI_VISION_MODEL = "gemini-3.6-flash"
+
+SUMMARY_SYSTEM_PROMPT = (
+    "You write a standalone summary of one document chunk for search and retrieval. "
+    "The summary is stored on its own, so a reader who never sees the source must "
+    "still understand it. Do not say \"this chunk\", \"the table above\", or \"the figure\".\n"
+    "Cover:\n"
+    "- The topic and the claim the passage makes, in the source's own terms\n"
+    "- Facts worth retrieving: names, numbers, units, equations, and comparisons\n"
+    "- Each table as sentences: column meaning, row relationships, and notable values. Do not copy raw HTML\n"
+    "- Each image as a description: what it shows, labels or axes, and the point it supports\n"
+    "Use only the text, tables, and images provided. Do not add outside knowledge. "
+    "Write dense prose. Return only the summary."
+)
+
+
+def _image_bytes(image_b64: str) -> tuple[bytes, str]:
+    """Decode a raw or data-URL base64 image for Gemini."""
+    raw = image_b64.strip()
+    if raw.startswith("data:"):
+        header, raw = raw.split(",", 1)
+        mime = header.split(";")[0].removeprefix("data:") or "image/jpeg"
+    elif raw.startswith("iVBOR"):
+        mime = "image/png"
+    elif raw.startswith("/9j/"):
+        mime = "image/jpeg"
+    elif raw.startswith("R0lGOD"):
+        mime = "image/gif"
+    elif raw.startswith("UklGR"):
+        mime = "image/webp"
+    else:
+        mime = "image/jpeg"
+    return base64.b64decode(raw), mime
+
+
+def _summarize_with_gemini(prompt: str, images: list) -> str:
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY is missing from the environment (.env)")
+
+    parts: list = [prompt]
+    for image in images:
+        if not image:
+            continue
+        data, mime = _image_bytes(image)
+        parts.append(types.Part.from_bytes(data=data, mime_type=mime))
+
+    client = genai.Client(api_key=api_key)
+    response = client.models.generate_content(
+        model=GEMINI_VISION_MODEL,
+        contents=parts,
+        config=types.GenerateContentConfig(
+            system_instruction=SUMMARY_SYSTEM_PROMPT,
+        ),
     )
-    client = OpenAI(api_key=os.getenv("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1",)
+    return response.text or ""
+
+
+def _summarize_with_groq(prompt: str) -> str:
+    client = OpenAI(
+        api_key=os.getenv("GROQ_API_KEY"),
+        base_url="https://api.groq.com/openai/v1",
+    )
+    response = client.chat.completions.create(
+        model=GROQ_TEXT_MODEL,
+        messages=[
+            {"role": "system", "content": SUMMARY_SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ],
+    )
+    return response.choices[0].message.content or ""
+
+
+def create_ai_summary_for_chunk(text: str, tables: list, images: list):
+    """Summarize a chunk. Images use Gemini; tables stay on the Groq text model."""
+    prompt = f"Text: {text}\nTables: {tables}"
+    image_inputs = [image for image in images if image]
     try:
-        response = client.chat.completions.create(
-            model="openai/gpt-oss-20b",
-            messages=[
-                {"role": "system", "content": SUMMARY_SYSTEM_PROMPT},
-                {"role": "user", "content": f"Text: {text}\nTables: {tables}\nImages: {images}"}
-            ]
-        )
-        return response.choices[0].message.content
+        if image_inputs:
+            print(f"summarizing with {GEMINI_VISION_MODEL}")
+            return _summarize_with_gemini(prompt, image_inputs)
+        print(f"summarizing with {GROQ_TEXT_MODEL}")
+        return _summarize_with_groq(prompt)
     except Exception as e:
         print(f"Error creating AI summary for chunk: {e}")
         return text
@@ -159,7 +221,7 @@ def main():
     print(docs[0].page_content)
 
     # Embed and persist in a Chroma database separate from db/chroma_db
-    # store_docs(docs)
+    store_docs(docs)
 
 if __name__ == "__main__":
     main()
