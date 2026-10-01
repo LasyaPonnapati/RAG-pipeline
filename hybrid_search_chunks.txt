@@ -1,0 +1,247 @@
+SpaceX's Raptor engine burns liquid methane and liquid oxygen at very high chamber pressure, which lets Starship produce more thrust from a compact engine than older kerosene designs.
+
+Raptor uses a full-flow staged combustion cycle: both the fuel-rich and oxidizer-rich turbines spin before the propellants meet in the main combustion chamber, which raises efficiency and keeps the hardware cooler.
+
+Falcon 9's first stage fires its Merlin engines three times after launch: once to boost, once to slow down from hypersonic speed, and once for the landing burn so it can touch down upright.
+
+Falcon 9 landing legs deploy in the final seconds and lock open so the booster can stand on a concrete pad or on a drone ship's deck after the landing burn.
+
+Grid fins on Falcon 9 steer the booster during atmospheric reentry by tilting into the airflow, which controls the angle of attack before the engines light for landing.
+
+A SpaceX drone ship is a converted barge with station-keeping thrusters that holds position in the ocean so a booster can land when the mission does not have enough fuel to return to the launch site.
+
+Starship's hull is welded from rings of stainless steel because that alloy stays strong at cryogenic temperatures and survives the heat of reentry better than the aluminum used on many older rockets.
+
+Starship's heat shield is a blanket of hexagonal ceramic tiles on the windward side. The tiles shed heat during reentry so the steel skin underneath does not soften.
+
+Super Heavy is the first-stage booster under Starship. It clusters many Raptor engines at the base so the stack can lift a fully fueled ship off the pad.
+
+Hot staging separates Starship from Super Heavy while some booster engines are still firing. The ship lights its engines and pulls away before the booster shuts down completely.
+
+Merlin engines on Falcon 9 burn RP-1 kerosene and liquid oxygen. They are gas-generator engines, simpler than Raptor, and nine of them power the first stage.
+
+A vacuum-optimized Raptor has a much larger nozzle bell than a sea-level Raptor so the exhaust expands fully in space, which raises specific impulse on the upper stage.
+
+Specific impulse measures how much thrust an engine gets from each unit of propellant. Higher specific impulse means the same tank of fuel can change the vehicle's speed by a larger amount.
+
+Regenerative cooling runs cold propellant through channels in the chamber wall before it is burned, so the metal does not melt even though the flame inside is hotter than the melting point of the wall.
+
+Autogenous pressurization uses a little vaporized methane or oxygen from the engines to keep Starship's tanks at the right pressure, instead of carrying a separate helium system.
+
+Max-Q is the moment in ascent when aerodynamic pressure on the vehicle is highest. Rockets often throttle down briefly there so the structure is not overloaded.
+
+A gravity turn tips the rocket from vertical toward horizontal a little at a time so most of the speed it builds is horizontal, which is what an orbit actually requires.
+
+Orbital speed in low Earth orbit is about 7.8 kilometers per second. Below that speed the vehicle falls back; at that speed the curve of its fall matches the curve of the Earth.
+
+Payload fairings are the clamshell nose around a satellite on Falcon 9. After they split and fall away, ships try to catch the halves so they can fly again.
+
+A flight-termination system can destroy a rocket that is leaving its cleared corridor. It is an independent safety path, separate from the guidance computer that is flying the mission.
+
+Methalox propellant, methane plus oxygen, leaves less soot in the engine than kerosene, which makes reuse easier because the turbopumps and chambers stay cleaner between flights.
+
+Falcon 9's boostback burn flips the first stage around and cancels the downrange velocity when the mission profile calls for a return to the launch site instead of a drone ship.
+
+The entry burn on Falcon 9 lights three engines while the booster is still high and fast, slowing it enough that heating and loads stay inside the limits of the interstage and tanks.
+
+Starship's header tanks are small internal tanks that keep liquid propellant at the engine inlets during the flip and landing burn, when the main tanks may be nearly empty and the liquid is sloshing.
+
+Raptor gimbal actuators swivel the outer engines a few degrees to steer the vehicle. The center engines often stay fixed while the outer ones provide the control moment.
+
+A transformer language model reads the tokens so far and predicts the next token. Attention scores decide which earlier tokens should influence that prediction the most.
+
+Self-attention builds a query, a key, and a value vector for every token. The dot product of a query with each key becomes a weight, and those weights mix the value vectors into a new representation.
+
+Multi-head attention runs several attention calculations in parallel on different projections of the same tokens, so one head can track syntax while another tracks a name or a number mentioned earlier.
+
+ChatGPT-style models are tuned with human feedback: raters rank several sample answers, a reward model learns those preferences, and further training pushes the policy toward answers the raters preferred.
+
+RLHF starts from a model that already predicts text well. Supervised fine-tuning on high-quality demonstrations comes first, then the preference ranking stage, then a reinforcement or preference-optimization step.
+
+A tokenizer splits text into subword pieces before the model sees it. Common words may be one token, while rare words are broken into smaller pieces the model learned during training.
+
+Token embeddings are learned vectors. Words that appear in similar contexts end up closer together in that vector space, which is why "engine" and "thruster" can behave alike inside the network.
+
+Positional encodings tell the transformer the order of tokens, because attention by itself treats the input as a set. Without positions, "dog bites man" and "man bites dog" would look the same.
+
+A feed-forward block sits after attention in each transformer layer and processes each token on its own. Stacking many layers lets information mix across the sequence and then transform locally.
+
+Softmax turns raw attention scores into a probability distribution that sums to one, so every token contributes a fraction of the mix and the fractions never go negative.
+
+Temperature changes how peaked next-token sampling is. Low temperature makes the model stick to the most likely words; high temperature lets less likely words through and the text gets more varied.
+
+The context window is the maximum number of tokens the model can attend to at once. Anything beyond that window is not visible unless it is summarized or retrieved from outside the model.
+
+Pretraining teaches a model to predict tokens on a huge text corpus. Fine-tuning then continues training on a narrower set of examples so the model follows a specific task or style.
+
+LoRA adapts a large model by training small low-rank matrices beside the frozen weights. That cuts the number of parameters that must be stored for each new task.
+
+Retrieval-augmented generation fetches passages from an external store and puts them in the prompt so the model can answer from those passages instead of only from its parameters.
+
+Cosine similarity compares embedding vectors by the angle between them. Two chunks can score as close even if one vector is longer, because the measure ignores magnitude.
+
+BM25 ranks documents by how often the query words appear, discounted when a word is common across the whole collection, and it also accounts for document length.
+
+A hallucination in a language model is a fluent statement that is not supported by the source or by the facts. Retrieval reduces that risk only when the fetched chunks actually contain the answer.
+
+A system prompt is the instruction prefix that sets role and constraints before the user message. The model treats it as part of the context that shapes every later token.
+
+Chain-of-thought prompting asks the model to write intermediate steps before the final answer. Those steps occupy context and can improve multi-hop questions even though they are still just generated text.
+
+Batch size is how many training examples the optimizer sees before one weight update. Larger batches give a steadier gradient estimate and use more memory.
+
+Learning rate sets the step size of each weight update. Too high and training diverges; too low and the model crawls and may stall in a poor region.
+
+Overfitting happens when a model memorizes the training set and scores worse on new examples. Regularization, more data, and early stopping are the usual counters.
+
+Dropout randomly zeroes activations during training so the network cannot rely on one path. At inference time the full network is used and the weights are scaled to match.
+
+Layer normalization rescales activations inside a transformer block so deep stacks stay numerically stable while gradients flow backward through many layers.
+
+The residual connection adds a layer's input to its output. That gives gradients a direct path and lets the layer learn a small change instead of rebuilding the whole representation.
+
+Byte-pair encoding builds the tokenizer vocabulary by repeatedly merging the most frequent character pairs, which is why common English fragments become single tokens.
+
+Top-p sampling draws the next token from the smallest set of candidates whose probabilities sum to at least p, cutting off the long tail of unlikely words.
+
+A reward model in RLHF is a separate network trained to score answers the way human raters did. The policy is then updated to increase that score without drifting too far from the base model.
+
+Kubernetes stores the desired state of the cluster in etcd. Controllers watch that data and start, stop, or restart containers until the running objects match the declared spec.
+
+Each Kubernetes pod gets its own IP address on the cluster network. Containers inside one pod share that IP and can reach each other on localhost.
+
+A Kubernetes Service keeps a stable virtual IP and DNS name, then load-balances traffic across the pods whose labels match the selector and whose readiness probes are passing.
+
+A Deployment declares how many pod replicas should exist and how to roll them out. It owns a ReplicaSet, and the ReplicaSet is what actually creates and deletes pods.
+
+A ReplicaSet counts pods with a given label selector and creates or removes pods until the count matches its replica field. You usually edit the Deployment instead of the ReplicaSet.
+
+A ConfigMap holds non-secret configuration as files or environment variables that are mounted into a pod. Changing the ConfigMap does not by itself restart the pod.
+
+A Kubernetes Secret stores small sensitive values such as tokens. They are base64-encoded in etcd unless encryption at rest is turned on, so they are not a substitute for a dedicated vault by themselves.
+
+An Ingress object describes HTTP routes from outside the cluster to Services. An ingress controller, which is a separate process, reads those objects and programs a proxy.
+
+Namespaces divide one cluster into named scopes so teams can reuse the same object names and apply different resource quotas and network policies.
+
+The kube-scheduler assigns each new pod to a node. It filters nodes that cannot fit the pod, then scores the rest on spread, resources, and affinity rules.
+
+A liveness probe tells the kubelet whether a container is still working. If the probe fails enough times, the kubelet kills the container and the restart policy brings it back.
+
+A readiness probe tells a Service whether a pod should receive traffic. A pod can be alive but not ready while it loads data or warms a cache.
+
+A HorizontalPodAutoscaler changes the replica count of a Deployment based on a metric such as CPU use, so the cluster adds pods when load rises and removes them when it falls.
+
+A PersistentVolume is cluster storage that outlives a pod. A PersistentVolumeClaim is the pod's request for that storage, and the claim binds to a volume that matches its size and access mode.
+
+A DaemonSet runs one copy of a pod on every selected node, which is the usual pattern for log collectors and network plugins that must sit on each machine.
+
+A kubeconfig file stores the cluster API address, the user credentials, and the current context kubectl should talk to. Switching context points the same CLI at another cluster.
+
+A container runtime on each node pulls images and starts the processes that Kubernetes calls containers. The kubelet is the node agent that tells the runtime what to start.
+
+Resource requests are what the scheduler uses to reserve CPU and memory. Limits are the ceiling the runtime enforces; a container that passes its memory limit can be killed.
+
+A NetworkPolicy selects pods and says which other pods or CIDRs may connect to them. Without a policy controller and a default-deny rule, traffic is otherwise allowed.
+
+etcd is a Raft key-value store. The Kubernetes API server is usually the only component that writes it, and losing quorum on etcd stops the control plane from making new decisions.
+
+A rolling update replaces pods a few at a time according to maxUnavailable and maxSurge, so a Deployment can ship a new image without taking every replica down at once.
+
+A lithium-ion cell stores energy by moving lithium ions from the cathode into a graphite anode while charging, and the ions travel back to the cathode when the cell discharges through a load.
+
+The electrolyte in a lithium-ion cell lets ions pass but blocks electrons, so electrons are forced to travel through the external circuit and do useful work instead of shorting inside the cell.
+
+A battery management system measures each cell's voltage and temperature and opens contactors if a cell would overcharge, over-discharge, or overheat, protecting the rest of the pack.
+
+The solid-electrolyte interphase is a thin film that forms on the graphite anode during the first charges. It consumes a little lithium but then stops the electrolyte from reacting continuously with the anode.
+
+Thermal runaway starts when a cell heats enough to trigger reactions that create still more heat. If neighboring cells absorb that heat, the failure can propagate through the pack.
+
+NMC cathodes use nickel, manganese, and cobalt and store more energy per kilogram. LFP cathodes use lithium iron phosphate, which is heavier for the same energy but more tolerant of heat and fast charging.
+
+A typical lithium-ion cell is considered full near 4.2 volts. Holding it there for a long time stresses the cathode, so many packs stop a little earlier to gain cycle life.
+
+C-rate describes current relative to capacity. A 1C discharge empties the cell in about an hour; a 2C discharge empties it in about half an hour if the cell can sustain that current.
+
+Graphite anodes store lithium between carbon layers, a process called intercalation. Silicon can store more lithium but swells so much that the electrode cracks unless it is blended and buffered.
+
+Cycle life is how many charge-discharge cycles a cell can complete before its capacity falls below a chosen fraction of the original, often eighty percent. Heat and high voltage shorten that life.
+
+State of charge is the estimate of how full the cell is. Coulomb counting integrates current over time, and voltage lookup corrects the drift that pure integration accumulates.
+
+Cell balancing moves a little charge so series cells stay at similar voltages. Without it, the highest cell hits the charge limit first and the pack stops while other cells still have room.
+
+A contactor is a high-current relay the BMS controls. It disconnects the pack from the inverter if measurements leave a safe window, which is faster to trust than software alone inside the motor controller.
+
+Bus bars and weld tabs carry current between cells. Undersized joints heat under load, and that local heat can age the nearest cells even when the average pack temperature looks fine.
+
+Calendar aging is capacity loss that happens while a cell sits, even with no cycling. High state of charge and high storage temperature both speed the side reactions that cause it.
+
+PostgreSQL uses a B-tree index to keep keys in sorted order, so finding a matching row is a short walk down the tree and a few page reads instead of a scan of the whole table.
+
+PostgreSQL writes each change to the write-ahead log before it marks the table page dirty, so after a crash it can replay the log and finish transactions that had already committed.
+
+MVCC in PostgreSQL lets readers see a snapshot of old row versions while writers create new versions. Readers do not block writers, and writers do not block ordinary readers.
+
+VACUUM reclaims space from dead row versions that no open snapshot still needs, and it updates the visibility map so index-only scans can skip heap pages that are all-visible.
+
+A sequential scan reads the whole table when the planner expects that to be cheaper than random index lookups, which is common when a query matches a large fraction of the rows.
+
+The query planner estimates cost from table statistics that ANALYZE collects. Stale statistics make it pick a nested loop or a hash join that is wrong for the actual data.
+
+READ COMMITTED isolation means each statement sees rows committed before that statement started. REPEATABLE READ keeps one snapshot for the whole transaction.
+
+A GIN index stores one entry per element inside a composite value, which makes it the usual choice for full-text search, arrays, and JSONB containment queries.
+
+A checkpoint flushes dirty buffers to the data files and records a point in the write-ahead log. Recovery after a crash only has to replay the log from the last checkpoint.
+
+Streaming replication sends write-ahead log records to a standby as they are generated. The standby replays them so it can be promoted if the primary fails.
+
+Dead tuples are row versions that a newer update or delete has made invisible. They still occupy pages until vacuum removes them, and a table that never gets vacuumed keeps growing.
+
+EXPLAIN shows the plan PostgreSQL expects to use, and EXPLAIN ANALYZE runs the query and adds the actual row counts and times so you can see where the estimates were wrong.
+
+A connection pooler such as PgBouncer keeps a smaller set of real database sessions and lends them to many clients, because each PostgreSQL backend process has a noticeable memory cost.
+
+TOAST stores oversized column values in a side table and leaves a pointer in the main row, so a wide text or JSON value does not force every index scan to haul the whole field around.
+
+Row-level locks in PostgreSQL block conflicting updates to the same tuple while still allowing other transactions to read it under MVCC. Lock waits show up in pg_locks.
+
+A partial index includes only rows that match a WHERE clause, which keeps it small when you always query a subset such as orders that are not yet shipped.
+
+A covering index contains every column the query needs, so PostgreSQL can answer from the index alone and skip the heap when the visibility map says the pages are all-visible.
+
+Fillfactor leaves free space on index and heap pages so updates can land on the same page. That reduces how often a B-tree page has to split under a write-heavy workload.
+
+An HTTP cache stores a response and reuses it while it is fresh. Cache-Control max-age tells the client how long that reuse is allowed before it must revalidate with the origin.
+
+Redis keeps data structures in memory and can persist snapshots or an append-only log. It is often used as a cache, a counter store, or a short-lived queue between services.
+
+A TCP connection starts with a three-way handshake: the client sends SYN, the server replies SYN-ACK, and the client sends ACK. Only then does application data flow.
+
+DNS resolves a name to an address by following referrals from the root to a TLD server and then to the authoritative server for that zone, and resolvers cache the answer until the TTL expires.
+
+A load balancer spreads requests across healthy backends. Health checks remove a backend that stops answering so new requests are not sent to a dead instance.
+
+The CAP theorem says that during a network partition a distributed store must choose between serving every request and keeping every replica identical. Systems document which side they pick.
+
+Consistent hashing places both servers and keys on a ring so that adding one server moves only a fraction of the keys, instead of remapping almost every key as a simple modulo hash would.
+
+A message queue lets a producer hand off work and continue. The consumer pulls messages at its own pace, and acknowledgements decide whether a message can be deleted or must be retried.
+
+An idempotent API can be called more than once with the same key and still apply the change only once. Clients use that when a timeout leaves them unsure whether the first call succeeded.
+
+Rate limiting caps how many requests a caller may make in a window. Token buckets allow short bursts while still enforcing an average rate over time.
+
+A content delivery network caches static files near users so the origin server is not hit for every image or script, and it also hides the origin's address behind the edge.
+
+TLS wraps HTTP so the bytes on the wire are encrypted and the client can check the server certificate against a trusted issuer before it sends a request body.
+
+A reverse proxy terminates client connections and forwards them to app servers. It can also retry idempotent requests, compress responses, and hold slow clients so the app stays free.
+
+OAuth access tokens are short-lived credentials a client presents to an API. The refresh token, stored more carefully, is what obtains a new access token without asking the user to log in again.
+
+A circuit breaker stops calling a dependency that is failing and fails fast for a cool-down period, so one slow downstream service does not pile up threads in every caller.
+
+Database indexes and rocket engines solve different problems, but both trade extra structure for faster work: an index spends disk space to avoid full scans, and a nozzle spends mass to turn pressure into directed thrust.
