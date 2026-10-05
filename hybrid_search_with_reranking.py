@@ -30,7 +30,16 @@ ANSWER_PROMPT = (
     "Use only those documents. If they are not enough, say you don't know. "
     "Return the answer in a concise and clear manner. "
     "When the documents describe separate steps or events, keep them separate. "
-    "Do not merge them into one step."
+    "Do not merge them into one step. "
+    "If a document lists repeated actions in order, such as "
+    "'once to A, once to B, and once for C', that list is the order of those actions. "
+    "Do not add an action before that list. "
+    "Do not describe an action as launch or upward acceleration unless a document says that. "
+    "Match each named event to the list item with the same description. "
+    "Do not move a description from one list item onto another. "
+    "Place any other event using only the time words in its own document, "
+    "such as 'before', 'after', or 'in the final seconds'. "
+    "Document numbers are relevance rank, not time order."
 )
 
 client = OpenAI(
@@ -203,13 +212,15 @@ def generate_answer(query: str, docs: list[Document]) -> str:
     )
     response = client.chat.completions.create(
         model=GROQ_MODEL,
+        temperature=0,
         messages=[
             {"role": "system", "content": ANSWER_PROMPT},
             {
                 "role": "user",
                 "content": (
                     "Use only the following context to answer the question. "
-                    "If the context is not sufficient, say you don't know.\n\n"
+                    "If the context is not sufficient, say you don't know. "
+                    "Keep each described action separate, and keep the order a document lists.\n\n"
                     f"Context:\n{context}\n\n"
                     f"Question: {query}"
                 ),
